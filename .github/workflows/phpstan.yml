@@ -40,5 +40,5 @@ jobs:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           for file in $(git diff ${base_branch} HEAD --diff-filter=AM --name-only -- "*.php") ; do
-            ./vendor/bin/phpstan analyse ${file} --error-format=raw -l 0 --no-progress | reviewdog -reporter=github-pr-review -f=phpstan
+            ./vendor/bin/phpstan analyse ${file}
           done
