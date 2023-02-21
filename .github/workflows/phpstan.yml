@@ -39,10 +39,6 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git diff ${base_branch} HEAD --diff-filter=AM --name-only -- "*.php"
-      - run: |
-          echo '1' $GITHUB_REF
-          echo '2' ${{ github.ref }}
-          echo '3' ${{ github.ref_name }}
-          echo '4' ${{ github.head_ref }}
-          echo '5' ${{ github.base_ref }}
+          for file in $(git diff ${{ github.base_ref }} HEAD --diff-filter=AM --name-only -- "*.php") ; do
+            ./vendor/bin/phpstan analyse ${file}
+          done
